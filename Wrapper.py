@@ -2,7 +2,7 @@ from google_images_download import google_images_download
 import os
 from autocrop import autocrop
 
-basedir = '/Users/philp/Desktop/ImageDownload_Autocrop/downloads'
+basedir = ''
 space = ' '
 
 #response = google_images_download.googleimagesdownload()
