@@ -1,18 +1,27 @@
 from google_images_download import google_images_download
-import os
+import os, subprocess
 from autocrop import autocrop
 
-basedir = ''
+FolderList = []
+CropList = []
+basedir = 'C:\\Users\\Phil John\\Desktop\\Face-Datasets-Maker-master\\downloads'
 space = ' '
+downloadArgument_dict = {'keywords_from_file': 'BNK48_Members.csv', 'limit': '20', 'format': 'jpg', 'prefix_keywords': 'BNK48'}
 
-#response = google_images_download.googleimagesdownload()
-#absolute_image_paths = response.download({'keywords':'Nicolas Cage', 'limit':5, 'format':'jpg'})
+response = google_images_download.googleimagesdownload()
+absolute_image_paths = response.download(downloadArgument_dict)
 
 #Credit to phihag for answer on how to change folder name with python 
 #(https://stackoverflow.com/questions/8735312/how-to-change-folder-names-in-python)
 for folder in os.listdir(basedir):
     if folder.count(space) != 0:
-        print(folder)
         newName = folder.replace(space,'_')
-        print(newName)
         os.rename(os.path.join(basedir, folder), os.path.join(basedir, newName))
+    else:
+        FolderList.append(basedir + '\\' + folder)
+        CropList.append(basedir + '\\' + 'Crop_' + folder)
+
+i=0
+for member in FolderList:
+    subprocess.Popen('cmd.exe /k autocrop -i "%s" -o "%s"' %(FolderList[i], CropList[i]))
+    i+=1
